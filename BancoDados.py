@@ -13,3 +13,12 @@ class BancoMySQL():
         cursor_paragrafos.execute(query_paragrafos,)
 
         return cursor_paragrafos
+
+    def seleciona_stopwords(self):
+
+        cursor_stopwords = self.conexao.cursor()
+
+        query_stopwords = ('select palavra from stopwords')
+        cursor_stopwords.execute(query_stopwords,)
+
+        return cursor_stopwords
