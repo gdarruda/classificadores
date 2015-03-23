@@ -28,26 +28,29 @@ class Classificador():
 
         return lista_stopwords
 
-    def monta_conjunto(self, stemming, stop_words, tipo_caracteristicas):
+    def monta_conjunto(self, stemming, stop_words, tipo_caracteristicas, binario):
+
+        print ("Stemming:" + str(stemming))
+        print ("Stop Words:" + str(stop_words))
+        print ("Representacao:" + tipo_caracteristicas)
+        print ("Binario:" + str(binario))
 
         cursor_paragrafos = self.bd.seleciona_paragrafos_corpus()
 
-        tokenizer = RegexpTokenizer(r'\w+') #Tokenizer que considera apenas alfanumerico
+        tokenizer = RegexpTokenizer(r'\w+') #Tokenizer que considera apenas alfa-numerico
 
         stemmer = RSLPStemmer()
 
         #Cria dinamicamente o vetor dependendo do tipo de contagem
-        vectorizer = getattr(sklearn.feature_extraction.text, tipo_caracteristicas)(binary=True, stop_words=self.lista_stopwords(stop_words))
+        vectorizer = getattr(sklearn.feature_extraction.text, tipo_caracteristicas)(binary=binario, stop_words=self.lista_stopwords(stop_words))
 
         paragrafos = list()
 
         for (paragrafo, polaridade) in cursor_paragrafos:
 
-            #Verifica se eh necessario realizar stemming
             if stemming:
                 tokens_paragrafo = tokenizer.tokenize(paragrafo)
 
-                #Faz o stemming das palavras
                 for (i, palavra) in enumerate(tokens_paragrafo):
                     tokens_paragrafo[i] = stemmer.stem(palavra)
 
@@ -66,7 +69,7 @@ class ClassificadorSVM(Classificador):
 
         classificador_svm = svm.LinearSVC()
         scores = cross_validation.cross_val_score(classificador_svm, self.matriz_caracteristicas, self.rotulos, cv=10)
-        print (scores.mean())
+        print ('SVM: ' + str(scores.mean()))
 
 class ClassificadorBayesiano(Classificador):
 
@@ -74,4 +77,4 @@ class ClassificadorBayesiano(Classificador):
 
         classificador_nb = naive_bayes.MultinomialNB(fit_prior=False)
         scores = cross_validation.cross_val_score(classificador_nb, self.matriz_caracteristicas, self.rotulos, cv=10)
-        print(scores.mean())
+        print ('Bayes: ' + str(scores.mean()))

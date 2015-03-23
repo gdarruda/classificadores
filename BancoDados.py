@@ -3,7 +3,7 @@ import pymysql
 class BancoMySQL():
 
     def __init__(self, usuario, senha, host, banco):
-        self.conexao = pymysql.connect(host=host, unix_socket='/tmp/mysql.sock', user=usuario, passwd=senha, db=banco)
+        self.conexao = pymysql.connect(host=host, unix_socket='/tmp/mysql.sock', user=usuario, passwd=senha, db=banco, init_command="set names utf8")
 
     def seleciona_paragrafos_corpus(self):
 
@@ -13,6 +13,13 @@ class BancoMySQL():
         cursor_paragrafos.execute(query_paragrafos,)
 
         return cursor_paragrafos
+        # retorno = list()
+
+        # retorno.append(('Isto resolve a crise.','PO'))
+        # retorno.append(('Isto resolve a crise lentamente.','NE'))
+        # retorno.append(('Isto intensifica a crise.','NG'))
+
+        # return retorno
 
     def seleciona_stopwords(self):
 

@@ -1,24 +1,39 @@
 from BancoDados import BancoMySQL
 from Classificador import ClassificadorSVM, ClassificadorBayesiano
+from ClassificadorScholz import ClassificadorScholz
 
 bd = BancoMySQL('garruda', 'garruda', '127.0.0.1', 'noticias')
 
 def monta_classificador():
 
-    # C = ClassificadorSVM(bd)
-    # C.monta_conjunto(True,False,'CountVectorizer')
-    # C.validacao_cruzada()
+    # for stemming in {True, False}:
 
-    # C = ClassificadorSVM(bd)
-    # C.monta_conjunto(True,False,'TfidfVectorizer')
-    # C.validacao_cruzada()
+    #     for stop_words in {True, False}:
 
-    C = ClassificadorBayesiano(bd)
-    C.monta_conjunto(True,True,'CountVectorizer')
-    C.validacao_cruzada()
+    #         for representacao in {'CountVectorizer', 'TfidfVectorizer'}:
 
-    C = ClassificadorBayesiano(bd)
-    C.monta_conjunto(True,False,'TfidfVectorizer')
+    #             if representacao == 'CountVectorizer':
+
+    #                 for contagem in {True,False}:
+
+    #                     # C = ClassificadorSVM(bd)
+    #                     # C.monta_conjunto(stemming,stop_words,representacao,contagem)
+    #                     # C.validacao_cruzada()
+
+    #                     C = ClassificadorBayesiano(bd)
+    #                     C.monta_conjunto(stemming,stop_words,representacao,contagem)
+    #                     C.validacao_cruzada()
+    #             else:
+    #                 # C = ClassificadorSVM(bd)
+    #                 # C.monta_conjunto(stemming,stop_words,representacao,False)
+    #                 # C.validacao_cruzada()
+
+    #                 C = ClassificadorBayesiano(bd)
+    #                 C.monta_conjunto(stemming,stop_words,representacao,False)
+    #                 C.validacao_cruzada()
+
+    C = ClassificadorScholz(bd)
+    C.monta_conjunto()
     C.validacao_cruzada()
 
 monta_classificador()
