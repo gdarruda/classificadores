@@ -16,24 +16,31 @@ def monta_classificador():
 
     #                 for contagem in {True,False}:
 
-    #                     # C = ClassificadorSVM(bd)
-    #                     # C.monta_conjunto(stemming,stop_words,representacao,contagem)
-    #                     # C.validacao_cruzada()
+    #                     C = ClassificadorSVM(bd)
+    #                     C.monta_conjunto(stemming,stop_words,representacao,contagem)
+    #                     C.validacao_cruzada()
 
     #                     C = ClassificadorBayesiano(bd)
     #                     C.monta_conjunto(stemming,stop_words,representacao,contagem)
     #                     C.validacao_cruzada()
     #             else:
-    #                 # C = ClassificadorSVM(bd)
-    #                 # C.monta_conjunto(stemming,stop_words,representacao,False)
-    #                 # C.validacao_cruzada()
+    #                 C = ClassificadorSVM(bd)
+    #                 C.monta_conjunto(stemming,stop_words,representacao,False)
+    #                 C.validacao_cruzada()
 
     #                 C = ClassificadorBayesiano(bd)
     #                 C.monta_conjunto(stemming,stop_words,representacao,False)
     #                 C.validacao_cruzada()
 
+    # for stemming in {True, False}:
+    #     C = ClassificadorScholz(bd)
+    #     C.monta_conjunto(stemming)
+    #     C.validacao_cruzada()
+
     C = ClassificadorScholz(bd)
-    C.monta_conjunto()
+    C.monta_conjunto(False)
     C.validacao_cruzada()
+    # C.gera_pca()
+    C.gera_csv()
 
 monta_classificador()

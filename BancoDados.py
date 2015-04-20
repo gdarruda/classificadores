@@ -1,15 +1,15 @@
-import pymysql
+import mysql.connector
 
 class BancoMySQL():
 
     def __init__(self, usuario, senha, host, banco):
-        self.conexao = pymysql.connect(host=host, unix_socket='/tmp/mysql.sock', user=usuario, passwd=senha, db=banco, init_command="set names utf8")
+        self.conexao = mysql.connector.connect(user=usuario, password=senha, host='127.0.0.1', database=banco, buffered=True)
 
     def seleciona_paragrafos_corpus(self):
 
         cursor_paragrafos = self.conexao.cursor()
 
-        query_paragrafos =  ('select paragrafo, polaridade from noticias_x_paragrafo where polaridade in (\'NG\',\'NE\',\'PO\')')
+        query_paragrafos =  ('select paragrafo, polaridade from noticias_x_paragrafo ncp join noticias n on n.id_noticia = ncp.id_noticia where polaridade in (\'NG\',\'NE\',\'PO\') and n.ind_corpus = \'S\'')
         cursor_paragrafos.execute(query_paragrafos,)
 
         return cursor_paragrafos

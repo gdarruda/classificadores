@@ -18,10 +18,16 @@ class ClassificadorScholz(ClassificadorSVM):
         self.bd = bd
         self.grafo = dict()
         self.stemmer = RSLPStemmer()
+        self.stemming = False
 
     def monta_chave(self, palavra, classe):
 
-        return self.stemmer.stem(palavra).upper() + '_' + classe
+        if self.stemming:
+            chave = self.stemmer.stem(palavra)
+        else:
+            chave = palavra
+
+        return chave.upper() + '_' + classe
 
     def classe_valida(self, chave):
 
@@ -68,7 +74,7 @@ class ClassificadorScholz(ClassificadorSVM):
 
         paragrafo_taggeado = list()
 
-        for sentenca in self.tokenizer.tokenize(paragrafo.decode('utf8')):
+        for sentenca in self.tokenizer.tokenize(paragrafo):
 
             palavras = self.tagger.tag(sentenca)
 
@@ -76,7 +82,11 @@ class ClassificadorScholz(ClassificadorSVM):
 
         return paragrafo_taggeado
 
-    def monta_conjunto(self):
+    def monta_conjunto(self, stemming):
+
+        self.stemming = stemming
+        print ("Scholz")
+        print ("Stemming:" + str(stemming))
 
         for (paragrafo, polaridade) in self.bd.seleciona_paragrafos_corpus():
 
@@ -111,12 +121,7 @@ class ClassificadorScholz(ClassificadorSVM):
             lista_caracteristicas.append(mapa_caracteristicas['SUB_ADJ'])
 
             self.matriz_caracteristicas.append(lista_caracteristicas)
-
-            print (paragrafo, polaridade)
-            print (lista_caracteristicas)
-
             self.rotulos.append(Classificador.depara_polaridade[polaridade])
-
 
     def busca_grafo(self, chave_1, chave_2):
 
@@ -211,7 +216,7 @@ class ClassificadorScholz(ClassificadorSVM):
     def entropia_subjetividade(self, totalizador):
 
         subjetividade = self.subjetividade(totalizador)
-        neutralidade  = self.subjetividade(totalizador)
+        neutralidade  = self.neutralidade(totalizador)
 
         if subjetividade + neutralidade == 0:
             return 0
@@ -262,4 +267,29 @@ class ClassificadorScholz(ClassificadorSVM):
             caracteristicas['SUB_' + classe] = self.entropia_subjetividade(totalizadores[classe])
 
         return (caracteristicas)
+
+    def gera_csv(self):
+
+        arquivo_csv = open("data_set.csv","w")
+        arquivo_csv.write('POL_VERB,POL_NOME,POL_ADV,POL_ADJ,SUB_VERB,SUB_NOME,SUB_ADV,SUB_ADJ,CLASSE\n')
+        depara_rotulos = {0:'PO',1:'NE', 2:'NG'}
+
+        for i in range(0,len(self.rotulos)):
+
+            rotulo = depara_rotulos[self.rotulos[i]]
+            lista_caracteristicas  = list()
+
+            for caracteristica in self.matriz_caracteristicas[i]:
+                lista_caracteristicas.append(str(caracteristica))
+
+            lista_caracteristicas.append(rotulo)
+
+            arquivo_csv.write(','.join(lista_caracteristicas) + '\n')
+
+        arquivo_csv.close()
+
+    def gera_pca(self):
+
+        Classificador.gera_pca(self)
+
 

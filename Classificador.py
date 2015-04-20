@@ -3,12 +3,14 @@ from nltk.stem import RSLPStemmer
 from sklearn import svm
 from sklearn import naive_bayes
 from sklearn import cross_validation
+from sklearn.decomposition import PCA
 import sklearn.feature_extraction.text
-
+import matplotlib.pyplot as plt
+import numpy as np
 
 class Classificador():
 
-    depara_polaridade = {'PO':1, 'NE':2, 'NG':3}
+    depara_polaridade = {'PO':0, 'NE':1, 'NG':2}
 
     def __init__(self, bd):
         self.bd = bd
@@ -23,7 +25,7 @@ class Classificador():
         cursor_stopwords = self.bd.seleciona_stopwords()
         lista_stopwords = list()
 
-        for (palavra,) in cursor_stopwords:
+        for palavra in cursor_stopwords:
             lista_stopwords.append(palavra)
 
         return lista_stopwords
@@ -63,6 +65,24 @@ class Classificador():
         #Matriz com os vetores de caracteristica
         self.matriz_caracteristicas = vectorizer.fit_transform(paragrafos)
 
+    def gera_pca(self):
+
+        pca = PCA(n_components=2)
+
+        X = pca.fit(self.matriz_caracteristicas).transform(self.matriz_caracteristicas)
+        y = np.array(self.rotulos)
+
+        target_names = np.array(['Positivo','Neutro','Negativo'])
+
+        plt.figure()
+        for c, i, target_name in zip("rgb", [0, 1, 2], target_names):
+            plt.scatter(X[y == i, 0], X[y == i, 1], c=c, label=target_name)
+        plt.legend()
+        plt.title('Polaridade')
+
+        plt.show()
+
+
 class ClassificadorSVM(Classificador):
 
     def validacao_cruzada(self):
@@ -71,6 +91,12 @@ class ClassificadorSVM(Classificador):
         scores = cross_validation.cross_val_score(classificador_svm, self.matriz_caracteristicas, self.rotulos, cv=10)
         print ('SVM: ' + str(scores.mean()))
 
+    def gera_pca(self):
+
+        self.matriz_caracteristicas =  self.matriz_caracteristicas.toarray()
+
+        Classificador.gera_pca(self)
+
 class ClassificadorBayesiano(Classificador):
 
     def validacao_cruzada(self):
@@ -78,3 +104,9 @@ class ClassificadorBayesiano(Classificador):
         classificador_nb = naive_bayes.MultinomialNB(fit_prior=False)
         scores = cross_validation.cross_val_score(classificador_nb, self.matriz_caracteristicas, self.rotulos, cv=10)
         print ('Bayes: ' + str(scores.mean()))
+
+    def gera_pca(self):
+
+        self.matriz_caracteristicas =  self.matriz_caracteristicas.toarray()
+
+        Classificador.gera_pca(self)
