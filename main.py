@@ -39,8 +39,10 @@ def monta_classificador():
 
     C = ClassificadorScholz(bd)
     C.monta_conjunto(False)
-    C.validacao_cruzada()
+    # C.validacao_cruzada()
+    C.classifica_tweets()
+    # C.treina()
     # C.gera_pca()
-    C.gera_csv()
+    # C.gera_csv()
 
 monta_classificador()

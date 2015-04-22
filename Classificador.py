@@ -82,8 +82,18 @@ class Classificador():
 
         plt.show()
 
+    def treina(self):
+        self.classificador.fit(self.matriz_caracteristicas, self.rotulos)
+
+    def classifica(self, caracteristicas):
+        return self.classificador.predict(caracteristicas)[0]
+
 
 class ClassificadorSVM(Classificador):
+
+    def __init__(self,bd):
+        Classificador.__init__(self,bd)
+        self.classificador = svm.LinearSVC()
 
     def validacao_cruzada(self):
 
@@ -98,6 +108,10 @@ class ClassificadorSVM(Classificador):
         Classificador.gera_pca(self)
 
 class ClassificadorBayesiano(Classificador):
+
+    def __init__(self,bd):
+        Classificador.__init__(self,bd)
+        self.classificador = naive_bayes.MultinomialNB(fit_prior=False)
 
     def validacao_cruzada(self):
 

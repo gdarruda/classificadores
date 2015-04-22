@@ -13,13 +13,6 @@ class BancoMySQL():
         cursor_paragrafos.execute(query_paragrafos,)
 
         return cursor_paragrafos
-        # retorno = list()
-
-        # retorno.append(('Isto resolve a crise.','PO'))
-        # retorno.append(('Isto resolve a crise lentamente.','NE'))
-        # retorno.append(('Isto intensifica a crise.','NG'))
-
-        # return retorno
 
     def seleciona_stopwords(self):
 
@@ -29,3 +22,21 @@ class BancoMySQL():
         cursor_stopwords.execute(query_stopwords,)
 
         return cursor_stopwords
+
+    def seleciona_tweets(self):
+
+        cursor_tweets = self.conexao.cursor()
+
+        query_tweets = ('select id_noticia, tweet from noticias')
+        cursor_tweets.execute(query_tweets)
+
+        return cursor_tweets
+
+    def atualiza_polaridade_tweet(self, id_noticia, polaridade):
+
+        cursor_noticia = self.conexao.cursor()
+
+        update_polaridade = ('update noticias set polaridade_tweet = %s where id_noticia = %s')
+        cursor_noticia.execute(update_polaridade,(polaridade, id_noticia))
+
+        self.conexao.commit()

@@ -11,11 +11,13 @@ class ClassificadorScholz(ClassificadorSVM):
                       'ADV':'ADV',
                       'ADJ':'ADJ','PROADJ':'ADJ','PCP':'ADJ'}
 
+    depara_rotulos = {0:'PO',1:'NE', 2:'NG'}
+
     def __init__(self, bd):
+        ClassificadorSVM.__init__(self, bd)
         nlpnet.set_data_dir('pos-pt')
         self.tokenizer = nltk.data.load('tokenizers/punkt/portuguese.pickle')
         self.tagger = nlpnet.POSTagger()
-        self.bd = bd
         self.grafo = dict()
         self.stemmer = RSLPStemmer()
         self.stemming = False
@@ -107,18 +109,7 @@ class ClassificadorScholz(ClassificadorSVM):
 
         for (paragrafo, polaridade) in self.bd.seleciona_paragrafos_corpus():
 
-            mapa_caracteristicas = self.extai_metricas(paragrafo)
-            lista_caracteristicas = list()
-
-            lista_caracteristicas.append(mapa_caracteristicas['POL_VERB'])
-            lista_caracteristicas.append(mapa_caracteristicas['POL_NOME'])
-            lista_caracteristicas.append(mapa_caracteristicas['POL_ADV'])
-            lista_caracteristicas.append(mapa_caracteristicas['POL_ADJ'])
-
-            lista_caracteristicas.append(mapa_caracteristicas['SUB_VERB'])
-            lista_caracteristicas.append(mapa_caracteristicas['SUB_NOME'])
-            lista_caracteristicas.append(mapa_caracteristicas['SUB_ADV'])
-            lista_caracteristicas.append(mapa_caracteristicas['SUB_ADJ'])
+            lista_caracteristicas = self.extai_metricas(paragrafo)
 
             self.matriz_caracteristicas.append(lista_caracteristicas)
             self.rotulos.append(Classificador.depara_polaridade[polaridade])
@@ -266,17 +257,27 @@ class ClassificadorScholz(ClassificadorSVM):
             caracteristicas['POL_' + classe] = self.entropia_polaridade(totalizadores[classe])
             caracteristicas['SUB_' + classe] = self.entropia_subjetividade(totalizadores[classe])
 
-        return (caracteristicas)
+        lista_caracteristicas = list()
+        lista_caracteristicas.append(caracteristicas['POL_VERB'])
+        lista_caracteristicas.append(caracteristicas['POL_NOME'])
+        lista_caracteristicas.append(caracteristicas['POL_ADV'])
+        lista_caracteristicas.append(caracteristicas['POL_ADJ'])
+
+        lista_caracteristicas.append(caracteristicas['SUB_VERB'])
+        lista_caracteristicas.append(caracteristicas['SUB_NOME'])
+        lista_caracteristicas.append(caracteristicas['SUB_ADV'])
+        lista_caracteristicas.append(caracteristicas['SUB_ADJ'])
+
+        return (lista_caracteristicas)
 
     def gera_csv(self):
 
         arquivo_csv = open("data_set.csv","w")
         arquivo_csv.write('POL_VERB,POL_NOME,POL_ADV,POL_ADJ,SUB_VERB,SUB_NOME,SUB_ADV,SUB_ADJ,CLASSE\n')
-        depara_rotulos = {0:'PO',1:'NE', 2:'NG'}
 
         for i in range(0,len(self.rotulos)):
 
-            rotulo = depara_rotulos[self.rotulos[i]]
+            rotulo = ClassificadorScholz.depara_rotulos[self.rotulos[i]]
             lista_caracteristicas  = list()
 
             for caracteristica in self.matriz_caracteristicas[i]:
@@ -292,4 +293,13 @@ class ClassificadorScholz(ClassificadorSVM):
 
         Classificador.gera_pca(self)
 
+    def classifica_tweets(self):
 
+        self.treina()
+
+        for (id_noticia, tweets) in self.bd.seleciona_tweets():
+
+            caracteristicas = self.extai_metricas(tweets)
+            resultado = self.classifica(caracteristicas)
+
+            self.bd.atualiza_polaridade_tweet(id_noticia, ClassificadorScholz.depara_rotulos[resultado])
