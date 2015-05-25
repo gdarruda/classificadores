@@ -8,14 +8,20 @@ import sklearn.feature_extraction.text
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 class Classificador():
 
-    depara_polaridade = {'PO':0, 'NE':1, 'NG':2}
+    depara_polaridade = {'PO': 0, 'NE': 1, 'NG': 2}
 
     def __init__(self, bd):
         self.bd = bd
         self.matriz_caracteristicas = None
-        self.rotulos = list()
+        self.rotulos = []
+
+        self.treino_caracteristicas = []
+        self.treino_rotulos = []
+        self.validacao_caracteristicas = []
+        self.validacao_rotulos = []
 
     def lista_stopwords(self, stop_words):
 
@@ -30,7 +36,7 @@ class Classificador():
 
         return lista_stopwords
 
-    def monta_conjunto(self, stemming, stop_words, tipo_caracteristicas, binario):
+    def monta_conjunto(self, stemming, stop_words, tipo_caracteristicas, binario, fold):
 
         print ("Stemming:" + str(stemming))
         print ("Stop Words:" + str(stop_words))
@@ -39,31 +45,55 @@ class Classificador():
 
         cursor_paragrafos = self.bd.seleciona_paragrafos_corpus()
 
-        tokenizer = RegexpTokenizer(r'\w+') #Tokenizer que considera apenas alfa-numerico
+        tokenizer = RegexpTokenizer(r'\w+')  # Tokenizer que considera apenas alfa-numerico
 
         stemmer = RSLPStemmer()
 
-        #Cria dinamicamente o vetor dependendo do tipo de contagem
-        vectorizer = getattr(sklearn.feature_extraction.text, tipo_caracteristicas)(binary=binario, stop_words=self.lista_stopwords(stop_words))
+        vocabulario = {}
 
-        paragrafos = list()
+        if fold == 0:
+            paragrafos = []
+        else:
+            treino_paragrafos = []
+            validacao_paragrafos = []
 
-        for (paragrafo, polaridade) in cursor_paragrafos:
+        for (paragrafo, polaridade, fold_paragrafo) in cursor_paragrafos:
 
-            if stemming:
-                tokens_paragrafo = tokenizer.tokenize(paragrafo)
+            paragrafo_concatenado = ''
 
-                for (i, palavra) in enumerate(tokens_paragrafo):
+            tokens_paragrafo = tokenizer.tokenize(paragrafo)
+
+            for (i, palavra) in enumerate(tokens_paragrafo):
+
+                if stemming:
                     tokens_paragrafo[i] = stemmer.stem(palavra)
+                else:
+                    tokens_paragrafo[i] = palavra
 
-                paragrafos.append(' '.join(tokens_paragrafo))
+                if tokens_paragrafo[i] not in vocabulario:
+                    vocabulario[tokens_paragrafo[i]] = (len(vocabulario) - 1) + 1
+
+                paragrafo_concatenado = ' '.join(tokens_paragrafo)
+
+            if fold == 0:
+                paragrafos.append(paragrafo_concatenado)
+                self.rotulos.append(Classificador.depara_polaridade[polaridade])
+            elif fold_paragrafo == fold:
+                validacao_paragrafos.append(paragrafo_concatenado)
+                self.validacao_rotulos.append(Classificador.depara_polaridade[polaridade])
             else:
-                paragrafos.append(paragrafo)
+                treino_paragrafos.append(paragrafo_concatenado)
+                self.treino_rotulos.append(Classificador.depara_polaridade[polaridade])
 
-            self.rotulos.append(Classificador.depara_polaridade[polaridade])
+        # Cria dinamicamente o vetor dependendo do tipo de contagem
+        vectorizer = getattr(sklearn.feature_extraction.text, tipo_caracteristicas)(
+            binary=binario, stop_words=self.lista_stopwords(stop_words), vocabulary=vocabulario)
 
-        #Matriz com os vetores de caracteristica
-        self.matriz_caracteristicas = vectorizer.fit_transform(paragrafos)
+        if fold == 0:
+            self.matriz_caracteristicas = vectorizer.fit_transform(paragrafos)
+        else:
+            self.treino_caracteristicas = vectorizer.fit_transform(treino_paragrafos)
+            self.validacao_caracteristicas = vectorizer.fit_transform(validacao_paragrafos)
 
     def gera_pca(self):
 
@@ -72,7 +102,7 @@ class Classificador():
         X = pca.fit(self.matriz_caracteristicas).transform(self.matriz_caracteristicas)
         y = np.array(self.rotulos)
 
-        target_names = np.array(['Positivo','Neutro','Negativo'])
+        target_names = np.array(['Positivo', 'Neutro', 'Negativo'])
 
         plt.figure()
         for c, i, target_name in zip("rgb", [0, 1, 2], target_names):
@@ -82,17 +112,37 @@ class Classificador():
 
         plt.show()
 
-    def treina(self):
+    def treina_valida(self):
+        self.classificador.fit(self.treino_caracteristicas, self.treino_rotulos)
+        return self.classificador.score(self.validacao_caracteristicas, self.validacao_rotulos)
+
+    def treina_valida_full(self):
         self.classificador.fit(self.matriz_caracteristicas, self.rotulos)
+        return self.classificador.score(self.matriz_caracteristicas, self.rotulos)
 
     def classifica(self, caracteristicas):
         return self.classificador.predict(caracteristicas)[0]
 
+    def gera_folds(self, quantidade):
+
+        lista_paragrafos = []
+
+        for chave in self.bd.seleciona_ids_corpus():
+            lista_paragrafos.append(chave)
+
+        kfolds = cross_validation.KFold(n=len(lista_paragrafos), n_folds=quantidade, shuffle=True, random_state=None)
+
+        for (i, (indice_treino, indice_teste)) in enumerate(kfolds):
+
+            for indice in indice_teste:
+                id_noticia, id_paragrafo = lista_paragrafos[indice]
+                self.bd.atualiza_fold_paragrafo(id_noticia, id_paragrafo, i + 1)
+
 
 class ClassificadorSVM(Classificador):
 
-    def __init__(self,bd):
-        Classificador.__init__(self,bd)
+    def __init__(self, bd):
+        Classificador.__init__(self, bd)
         self.classificador = svm.LinearSVC()
 
     def validacao_cruzada(self):
@@ -103,14 +153,15 @@ class ClassificadorSVM(Classificador):
 
     def gera_pca(self):
 
-        self.matriz_caracteristicas =  self.matriz_caracteristicas.toarray()
+        self.matriz_caracteristicas = self.matriz_caracteristicas.toarray()
 
         Classificador.gera_pca(self)
 
+
 class ClassificadorBayesiano(Classificador):
 
-    def __init__(self,bd):
-        Classificador.__init__(self,bd)
+    def __init__(self, bd):
+        Classificador.__init__(self, bd)
         self.classificador = naive_bayes.MultinomialNB(fit_prior=False)
 
     def validacao_cruzada(self):
@@ -121,6 +172,6 @@ class ClassificadorBayesiano(Classificador):
 
     def gera_pca(self):
 
-        self.matriz_caracteristicas =  self.matriz_caracteristicas.toarray()
+        self.matriz_caracteristicas = self.matriz_caracteristicas.toarray()
 
         Classificador.gera_pca(self)

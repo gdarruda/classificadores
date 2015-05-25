@@ -1,0 +1,760 @@
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.622641509434
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.566037735849
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.622641509434
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.566037735849
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.490566037736
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.433962264151
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.490566037736
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.433962264151
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.396226415094
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.377358490566
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.396226415094
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.377358490566
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.415094339623
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.433962264151
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.415094339623
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.433962264151
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.557692307692
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.634615384615
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.557692307692
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.634615384615
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.596153846154
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.557692307692
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.596153846154
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.557692307692
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.576923076923
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.538461538462
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.576923076923
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.538461538462
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.557692307692
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.480769230769
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.557692307692
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.480769230769
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.423076923077
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.480769230769
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.423076923077
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.480769230769
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.461538461538
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.461538461538
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.461538461538
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.461538461538
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.5
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.557692307692
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.5
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.557692307692
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.596153846154
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.596153846154
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.596153846154
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.596153846154
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.519230769231
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.615384615385
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.519230769231
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.615384615385
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.615384615385
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.576923076923
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.615384615385
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.576923076923
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.576923076923
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.596153846154
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.576923076923
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.596153846154
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.596153846154
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.596153846154
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.596153846154
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.596153846154
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.519230769231
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.538461538462
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.519230769231
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.538461538462
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.538461538462
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.519230769231
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.538461538462
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.519230769231
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.442307692308
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.519230769231
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.442307692308
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.519230769231
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.615384615385
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.615384615385
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.615384615385
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.615384615385
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.615384615385
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.673076923077
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.615384615385
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.673076923077
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.576923076923
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.673076923077
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.576923076923
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.673076923077
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.634615384615
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.615384615385
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.634615384615
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.615384615385
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.615384615385
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.615384615385
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.615384615385
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.615384615385
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.653846153846
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.673076923077
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.653846153846
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.673076923077
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.653846153846
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.596153846154
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.653846153846
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.596153846154
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.538461538462
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.519230769231
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.538461538462
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.519230769231
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.423076923077
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.461538461538
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.423076923077
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.461538461538
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.596153846154
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.519230769231
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.596153846154
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.519230769231
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.653846153846
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.634615384615
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.653846153846
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.634615384615
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.538461538462
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.538461538462
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.538461538462
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.538461538462
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.673076923077
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.576923076923
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.673076923077
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.576923076923
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.384615384615
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.384615384615
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.384615384615
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.384615384615
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.442307692308
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.423076923077
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.442307692308
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.423076923077
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.423076923077
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.519230769231
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.423076923077
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.519230769231
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.576923076923
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.5
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.576923076923
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.5
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.557692307692
+Stemming:False
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.576923076923
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.557692307692
+Stemming:False
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.576923076923
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:False
+0.519230769231
+Stemming:True
+Stop Words:False
+Representacao:CountVectorizer
+Binario:True
+0.519230769231
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:False
+0.519230769231
+Stemming:True
+Stop Words:True
+Representacao:CountVectorizer
+Binario:True
+0.519230769231

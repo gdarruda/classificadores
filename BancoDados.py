@@ -5,11 +5,29 @@ class BancoMySQL():
     def __init__(self, usuario, senha, host, banco):
         self.conexao = mysql.connector.connect(user=usuario, password=senha, host='127.0.0.1', database=banco, buffered=True)
 
+    def atualiza_fold_paragrafo(self, id_noticia, id_paragrafo, fold):
+
+        cursor_noticia = self.conexao.cursor()
+
+        update_polaridade = ('update noticias_x_paragrafo set fold = %s where id_noticia = %s and id_paragrafo = %s')
+        cursor_noticia.execute(update_polaridade, (fold, id_noticia, id_paragrafo))
+
+        self.conexao.commit()
+
     def seleciona_paragrafos_corpus(self):
 
         cursor_paragrafos = self.conexao.cursor()
 
-        query_paragrafos =  ('select paragrafo, polaridade from noticias_x_paragrafo ncp join noticias n on n.id_noticia = ncp.id_noticia where polaridade in (\'NG\',\'NE\',\'PO\') and n.ind_corpus = \'S\'')
+        query_paragrafos =  ('select paragrafo, polaridade, fold, entidade, id_perfil from noticias_x_paragrafo ncp join noticias n on n.id_noticia = ncp.id_noticia where polaridade in (\'NG\',\'NE\',\'PO\') and n.ind_corpus = \'S\'')
+        cursor_paragrafos.execute(query_paragrafos,)
+
+        return cursor_paragrafos
+
+    def seleciona_ids_corpus(self):
+
+        cursor_paragrafos = self.conexao.cursor()
+
+        query_paragrafos = ('select ncp.id_noticia, ncp.id_paragrafo from noticias_x_paragrafo ncp join noticias n on n.id_noticia = ncp.id_noticia where polaridade in (\'NG\',\'NE\',\'PO\') and n.ind_corpus = \'S\'')
         cursor_paragrafos.execute(query_paragrafos,)
 
         return cursor_paragrafos
@@ -40,3 +58,12 @@ class BancoMySQL():
         cursor_noticia.execute(update_polaridade,(polaridade, id_noticia))
 
         self.conexao.commit()
+
+    def seleciona_max_folds(self):
+
+        cursor_folds = self.conexao.cursor()
+
+        query_folds = ('select max(fold)from noticias_x_paragrafo ncp')
+        cursor_folds.execute(query_folds,)
+
+        return cursor_folds.fetchone()[0]
