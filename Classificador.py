@@ -3,6 +3,7 @@ from nltk.stem import RSLPStemmer
 from sklearn import svm
 from sklearn import naive_bayes
 from sklearn import cross_validation
+from sklearn import metrics
 from sklearn.decomposition import PCA
 import sklearn.feature_extraction.text
 import matplotlib.pyplot as plt
@@ -29,10 +30,10 @@ class Classificador():
             return list()
 
         cursor_stopwords = self.bd.seleciona_stopwords()
-        lista_stopwords = list()
+        lista_stopwords = set()
 
         for palavra in cursor_stopwords:
-            lista_stopwords.append(palavra)
+            lista_stopwords.add(palavra)
 
         return lista_stopwords
 
@@ -51,19 +52,26 @@ class Classificador():
 
         vocabulario = {}
 
+        lista_stopwords = self.lista_stopwords(stop_words)
+
         if fold == 0:
             paragrafos = []
         else:
             treino_paragrafos = []
             validacao_paragrafos = []
 
-        for (paragrafo, polaridade, fold_paragrafo) in cursor_paragrafos:
+        for (paragrafo, polaridade, fold_paragrafo, entidade, id_perfil) in cursor_paragrafos:
 
             paragrafo_concatenado = ''
 
             tokens_paragrafo = tokenizer.tokenize(paragrafo)
 
             for (i, palavra) in enumerate(tokens_paragrafo):
+
+                palavra = palavra.lower()
+
+                if palavra in lista_stopwords:
+                    continue
 
                 if stemming:
                     tokens_paragrafo[i] = stemmer.stem(palavra)
@@ -87,7 +95,7 @@ class Classificador():
 
         # Cria dinamicamente o vetor dependendo do tipo de contagem
         vectorizer = getattr(sklearn.feature_extraction.text, tipo_caracteristicas)(
-            binary=binario, stop_words=self.lista_stopwords(stop_words), vocabulary=vocabulario)
+            binary=binario, vocabulary=vocabulario)
 
         if fold == 0:
             self.matriz_caracteristicas = vectorizer.fit_transform(paragrafos)
@@ -113,8 +121,17 @@ class Classificador():
         plt.show()
 
     def treina_valida(self):
+
         self.classificador.fit(self.treino_caracteristicas, self.treino_rotulos)
-        return self.classificador.score(self.validacao_caracteristicas, self.validacao_rotulos)
+        predicoes = self.classificador.predict(self.validacao_caracteristicas)
+
+        acuracia = metrics.accuracy_score(self.validacao_rotulos, predicoes)
+        precisao = metrics.precision_score(self.validacao_rotulos, predicoes, average='macro')
+        recall = metrics.recall_score(self.validacao_rotulos, predicoes, average='macro')
+        
+        print (acuracia)
+        print (precisao)
+        print (recall)
 
     def treina_valida_full(self):
         self.classificador.fit(self.matriz_caracteristicas, self.rotulos)

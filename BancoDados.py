@@ -1,5 +1,6 @@
 import mysql.connector
 
+
 class BancoMySQL():
 
     def __init__(self, usuario, senha, host, banco):

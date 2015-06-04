@@ -325,7 +325,7 @@ class ClassificadorScholz(ClassificadorSVM):
         lista_caracteristicas.append(caracteristicas['SUB_ADJ'])
 
         if self.ind_vies:
-            lista_caracteristicas.extend(self.decimal_binario(self.entidades[entidade], self.dim_entidade))
+            # lista_caracteristicas.extend(self.decimal_binario(self.entidades[entidade], self.dim_entidade))
             lista_caracteristicas.extend(self.decimal_binario(self.perfis[id_perfil], self.dim_perfil))
 
         return (lista_caracteristicas)
