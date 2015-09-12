@@ -1,7 +1,7 @@
 from BancoDados import BancoMySQL
 from Classificador import ClassificadorSVM
 
-bd = BancoMySQL('garruda', 'garruda', '127.0.0.1', 'noticias')
+bd = BancoMySQL('garruda', 'garruda', '127.0.0.1', 'noticias', 'DILMA')
 
 def validacao_cruzada():
 
@@ -9,7 +9,7 @@ def validacao_cruzada():
 
     for stemming in {True, False}:
 
-        for stop_words in {True, False}:
+        for stop_words in {False}:
 
             for representacao in {'CountVectorizer', 'TfidfVectorizer'}:
 

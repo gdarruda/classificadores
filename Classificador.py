@@ -5,6 +5,8 @@ from sklearn import naive_bayes
 from sklearn import cross_validation
 from sklearn import metrics
 from sklearn.decomposition import PCA
+from sklearn.cross_validation import StratifiedShuffleSplit
+from sklearn.grid_search import GridSearchCV
 import sklearn.feature_extraction.text
 import matplotlib.pyplot as plt
 import numpy as np
@@ -97,6 +99,8 @@ class Classificador():
         vectorizer = getattr(sklearn.feature_extraction.text, tipo_caracteristicas)(
             binary=binario, vocabulary=vocabulario)
 
+        print 'tamanho vocabulario :' + str(len(vocabulario))
+
         if fold == 0:
             self.matriz_caracteristicas = vectorizer.fit_transform(paragrafos)
         else:
@@ -128,7 +132,7 @@ class Classificador():
         acuracia = metrics.accuracy_score(self.validacao_rotulos, predicoes)
         precisao = metrics.precision_score(self.validacao_rotulos, predicoes, average='macro')
         recall = metrics.recall_score(self.validacao_rotulos, predicoes, average='macro')
-        
+
         print (acuracia)
         print (precisao)
         print (recall)
@@ -160,13 +164,25 @@ class ClassificadorSVM(Classificador):
 
     def __init__(self, bd):
         Classificador.__init__(self, bd)
-        self.classificador = svm.LinearSVC()
+        self.classificador = svm.SVC(kernel='poly', degree=4);
 
     def validacao_cruzada(self):
 
-        classificador_svm = svm.LinearSVC()
-        scores = cross_validation.cross_val_score(classificador_svm, self.matriz_caracteristicas, self.rotulos, cv=10)
-        print ('SVM: ' + str(scores.mean()))
+        # classificador_svm = svm.LinearSVC()
+        # scores = cross_validation.cross_val_score(classificador_svm, self.matriz_caracteristicas, self.rotulos, cv=10)
+
+        C_range = np.logspace(-2, 10, 13)
+        gamma_range = np.logspace(-9, 3, 13)
+        param_grid = dict(gamma=gamma_range, C=C_range)
+        cv = StratifiedShuffleSplit(self.rotulos, n_iter=5, test_size=0.2, random_state=42)
+        grid = GridSearchCV(svm.SVC(), param_grid=param_grid, cv=cv)
+        grid.fit(self.matriz_caracteristicas, self.rotulos)
+
+        # print ('SVM: ' + str(scores.mean()))
+
+        print("The best parameters are %s with a score of %0.2f"
+      % (grid.best_params_, grid.best_score_))
+
 
     def gera_pca(self):
 

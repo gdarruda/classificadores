@@ -77,8 +77,10 @@ class ClassificadorScholz(ClassificadorSVM):
 
         if classe in ClassificadorScholz.depara_classes:
             return (True, ClassificadorScholz.depara_classes[classe])
-        else:
+        elif classe == 'PU':
             return (False, '')
+        else:
+            return (True, 'OUT')
 
     def adiciona_grafo(self, chave_1, chave_2, polaridade, cont_chamadas):
 
@@ -281,8 +283,9 @@ class ClassificadorScholz(ClassificadorSVM):
         paragrafo_taggeado = self.tag_paragrafo(paragrafo)
         subgrafo = dict()
         caracteristicas = {'POL_VERB': .0, 'POL_NOME': .0, 'POL_ADV': .0, 'POL_ADJ': .0,
-                           'SUB_VERB': .0, 'SUB_NOME': .0, 'SUB_ADV': .0, 'SUB_ADJ': .0}
-        totalizadores = {'VERB': (0, 0, 0), 'NOME': (0, 0, 0), 'ADV': (0, 0, 0), 'ADJ': (0, 0, 0)}
+                           'SUB_VERB': .0, 'SUB_NOME': .0, 'SUB_ADV': .0, 'SUB_ADJ': .0,
+                           'POL_OUT': .0, 'SUB_OUT:': .0}
+        totalizadores = {'VERB': (0, 0, 0), 'NOME': (0, 0, 0), 'ADV': (0, 0, 0), 'ADJ': (0, 0, 0), 'OUT': (0, 0, 0)}
 
         for (i, (palavra_1, classe_1)) in enumerate(paragrafo_taggeado):
 
@@ -302,11 +305,12 @@ class ClassificadorScholz(ClassificadorSVM):
 
                 if classe_valida_1 and classe_valida_2:
 
-                    totalizadores[classe_1] = self.atualiza_tupla(totalizadores[classe_1], subgrafo[chave_1][chave_2])
+                    if classe_1 == classe_2:
+                        totalizadores[classe_1] = self.atualiza_tupla(totalizadores[classe_1], subgrafo[chave_1][chave_2])
 
-                    if classe_1 != classe_2:
-
-                        totalizadores[classe_2] = self.atualiza_tupla(totalizadores[classe_2], subgrafo[chave_1][chave_2])
+                    # if classe_1 != classe_2 and classe_1: != 'OUT' and classe_2 != 'OUT':
+                    
+                    #     totalizadores[classe_2] = self.atualiza_tupla(totalizadores[classe_2], subgrafo[chave_1][chave_2])
 
         for classe in totalizadores.keys():
 
@@ -318,16 +322,19 @@ class ClassificadorScholz(ClassificadorSVM):
         lista_caracteristicas.append(caracteristicas['POL_NOME'])
         lista_caracteristicas.append(caracteristicas['POL_ADV'])
         lista_caracteristicas.append(caracteristicas['POL_ADJ'])
+        # lista_caracteristicas.append(caracteristicas['POL_OUT'])
 
         lista_caracteristicas.append(caracteristicas['SUB_VERB'])
         lista_caracteristicas.append(caracteristicas['SUB_NOME'])
         lista_caracteristicas.append(caracteristicas['SUB_ADV'])
         lista_caracteristicas.append(caracteristicas['SUB_ADJ'])
+        # lista_caracteristicas.append(caracteristicas['SUB_OUT'])
 
         if self.ind_vies:
-            # lista_caracteristicas.extend(self.decimal_binario(self.entidades[entidade], self.dim_entidade))
+            lista_caracteristicas.extend(self.decimal_binario(self.entidades[entidade], self.dim_entidade))
             lista_caracteristicas.extend(self.decimal_binario(self.perfis[id_perfil], self.dim_perfil))
 
+        # print (lista_caracteristicas)
         return (lista_caracteristicas)
 
     def gera_csv(self):

@@ -1,7 +1,7 @@
 from BancoDados import BancoMySQL
 from Classificador import ClassificadorBayesiano
 
-bd = BancoMySQL('garruda', 'garruda', '127.0.0.1', 'noticias')
+bd = BancoMySQL('garruda', 'garruda', '127.0.0.1', 'noticias', 'DILMA')
 
 def validacao_cruzada():
 
@@ -9,7 +9,7 @@ def validacao_cruzada():
 
     for stemming in {True, False}:
 
-        for stop_words in {True, False}:
+        for stop_words in {False}:
 
             for representacao in {'CountVectorizer'}:
 
@@ -22,4 +22,11 @@ def validacao_cruzada():
                             C.monta_conjunto(stemming, stop_words, representacao, contagem, i)
                             C.treina_valida()
 
-validacao_cruzada()
+
+def ve_tamanho():
+    C = ClassificadorBayesiano(bd)
+    C.monta_conjunto(False, False, 'CountVectorizer', True, 0)
+    C.monta_conjunto(True, False, 'CountVectorizer', True, 0)
+
+# validacao_cruzada()
+ve_tamanho()
