@@ -14,8 +14,8 @@ class ClassificadorScholz(ClassificadorSVM):
 
     depara_rotulos = {0: 'PO', 1: 'NE', 2: 'NG'}
 
-    def __init__(self, bd, ind_vies):
-        ClassificadorSVM.__init__(self, bd)
+    def __init__(self, bd, ind_vies, c):
+        ClassificadorSVM.__init__(self, bd, c)
         nlpnet.set_data_dir('pos-pt')
         self.tokenizer = nltk.data.load('tokenizers/punkt/portuguese.pickle')
         self.tagger = nlpnet.POSTagger()
@@ -309,7 +309,6 @@ class ClassificadorScholz(ClassificadorSVM):
                         totalizadores[classe_1] = self.atualiza_tupla(totalizadores[classe_1], subgrafo[chave_1][chave_2])
 
                     # if classe_1 != classe_2 and classe_1: != 'OUT' and classe_2 != 'OUT':
-                    
                     #     totalizadores[classe_2] = self.atualiza_tupla(totalizadores[classe_2], subgrafo[chave_1][chave_2])
 
         for classe in totalizadores.keys():

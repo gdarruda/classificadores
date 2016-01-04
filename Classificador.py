@@ -99,8 +99,6 @@ class Classificador():
         vectorizer = getattr(sklearn.feature_extraction.text, tipo_caracteristicas)(
             binary=binario, vocabulary=vocabulario)
 
-        print 'tamanho vocabulario :' + str(len(vocabulario))
-
         if fold == 0:
             self.matriz_caracteristicas = vectorizer.fit_transform(paragrafos)
         else:
@@ -162,9 +160,9 @@ class Classificador():
 
 class ClassificadorSVM(Classificador):
 
-    def __init__(self, bd):
+    def __init__(self, bd, c):
         Classificador.__init__(self, bd)
-        self.classificador = svm.SVC(kernel='poly', degree=4);
+        self.classificador = svm.LinearSVC(C=c)
 
     def validacao_cruzada(self):
 
